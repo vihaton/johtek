@@ -20,9 +20,9 @@ public class Main {
     
     public static void main(String[] args) {
 //        System.out.println(AlphaBetaArvo(new Solmu(null, new Ristinolla(tehtava), "0")));
-        System.out.println(AlphaBetaArvo(new Solmu(null, new Ristinolla(), "0")));
+//        System.out.println(AlphaBetaArvo(new Solmu(null, new Ristinolla(), "0")));
         
-//        Solmu juurisolmu = luoPelipuu();
+        Solmu juurisolmu = luoPelipuu();
 //        pelaaJaTulosta(juurisolmu);
         
 //        voittoTest();
@@ -36,6 +36,7 @@ public class Main {
         int i = 0;
         int ristinVoittoja = 0;
         int nollanVoittoja = 0;
+        int tasapeleja = 0;
         
         while (!solmuPino.isEmpty()) {
             Solmu vanhempi = solmuPino.poll();
@@ -43,6 +44,7 @@ public class Main {
             if (vanhempi.peliOhi()) {
                 if (vanhempi.getArvo() > 0) ristinVoittoja++;
                 if (vanhempi.getArvo() < 0) nollanVoittoja++;
+                else tasapeleja++;
                 continue;
             }
                 
@@ -56,7 +58,7 @@ public class Main {
                 i++;
             }
         }
-        tulostaStatsit(ristinVoittoja, nollanVoittoja, i);
+        tulostaStatsit(ristinVoittoja, nollanVoittoja,tasapeleja, i);
         return root;
     }
 
@@ -79,13 +81,16 @@ public class Main {
         }
     }
     
-    private static void tulostaStatsit(int ristinVoittoja, int nollanVoittoja, int i) {
+    private static void tulostaStatsit(int ristinVoittoja, int nollanVoittoja, int tasapeleja, int i) {
         System.out.println("ristin voittoja " +ristinVoittoja);
         System.out.println("nollan voittoja " +nollanVoittoja);
-        System.out.println("risti voitti " +(ristinVoittoja-nollanVoittoja) + " peliä enemmän.");
-        int prosenttia = (int)(100*((double)ristinVoittoja/(double)i));
+        System.out.println("tasapeleja " +tasapeleja +"\n");
+        
+        int tuloksia = ristinVoittoja+nollanVoittoja+tasapeleja;
+        System.out.println("risti voitti " +(ristinVoittoja-nollanVoittoja) + " peliä nollaa enemmän.\n");
+        int prosenttia = (int)(100*((double)ristinVoittoja/(double)tuloksia));
         System.out.println("risti voitti " +prosenttia +"% kaikista peleistä (myös tasapelit)");
-        prosenttia = (int)(100*((double)nollanVoittoja/(double)i));
+        prosenttia = (int)(100*((double)nollanVoittoja/(double)tuloksia));
         System.out.println("nolla voitti " +prosenttia +"% kaikista peleistä (myös tasapelit)");
         System.out.println("");
     }
