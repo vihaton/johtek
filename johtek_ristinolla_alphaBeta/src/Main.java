@@ -23,7 +23,7 @@ public class Main {
 //        System.out.println(AlphaBetaArvo(new Solmu(null, new Ristinolla(), "0")));
         
         Solmu juurisolmu = luoPelipuu();
-//        pelaaJaTulosta(juurisolmu);
+        pelaaJaTulosta(juurisolmu);
         
 //        voittoTest();
         }
@@ -88,6 +88,7 @@ public class Main {
         
         int tuloksia = ristinVoittoja+nollanVoittoja+tasapeleja;
         System.out.println("risti voitti " +(ristinVoittoja-nollanVoittoja) + " peliä nollaa enemmän.\n");
+        
         int prosenttia = (int)(100*((double)ristinVoittoja/(double)tuloksia));
         System.out.println("risti voitti " +prosenttia +"% kaikista peleistä (myös tasapelit)");
         prosenttia = (int)(100*((double)nollanVoittoja/(double)tuloksia));
@@ -130,13 +131,16 @@ public class Main {
         System.out.println("voittiko nolla: " +ristiristi.voittikoNolla());
     }
 
+    static int lehtia = 0;
+    
     private static int AlphaBetaArvo(Solmu solmu) {
         return maxArvo(solmu, -1, 1);
     }
 
     private static int maxArvo(Solmu solmu, int a, int b) {
         if (solmu.peliOhi()) {
-//            System.out.println("arvo " + solmu.getArvo());
+            lehtia++;
+            System.out.println("lehti " +lehtia);
             return solmu.getArvo();
         }
         
@@ -146,7 +150,7 @@ public class Main {
         ArrayList<Solmu> lapset = solmu.getLapset();
         for (Solmu lapsi : lapset) {
             v = Math.max(v, minArvo(lapsi, a, b));
-//            if (v>=b) return v;
+            if (v>=b) return v;
             a = Math.max(a, v);
         }
         return v;
@@ -154,7 +158,8 @@ public class Main {
 
     private static int minArvo(Solmu solmu, int a, int b) {
         if (solmu.peliOhi()) {
-//            System.out.println("arvo " + solmu.getArvo());
+            lehtia++;
+            System.out.println("lehti " +lehtia);
             return solmu.getArvo();
         }
         
@@ -164,7 +169,7 @@ public class Main {
         ArrayList<Solmu> lapset = solmu.getLapset();
         for (Solmu lapsi : lapset) {
             v = Math.min(v, maxArvo(lapsi, a, b));
-//            if (v<= a) return v;
+            if (v<= a) return v;
             b = Math.min(v, b);
         }
         return v;
