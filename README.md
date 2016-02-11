@@ -1,2 +1,3 @@
-# ristinolla
-johtek 2.4
+#JohTek
+
+Laskareiden ohessa syntynyttä sälää.
